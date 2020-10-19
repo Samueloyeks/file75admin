@@ -1,0 +1,13 @@
+.header-sub {
+    font-size: 14px;
+    color: #A7A7A7 !important;
+    font-weight: 400 !important;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 80%;
+    overflow: hidden;
+}
+
+.MuiSvgIcon-root {
+    display: none !important;
+}

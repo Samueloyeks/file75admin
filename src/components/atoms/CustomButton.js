@@ -1,0 +1,29 @@
+import React, { Component } from 'react';
+import { Row, Col, Input, Button, Spinner } from 'reactstrap';
+import './index.css'
+
+
+const CustomButton = ({
+    title,
+    buttonType,
+    loading = false,
+    onclick,
+    ...rest
+}) => (
+        <Button
+            {...rest}
+            className='custom-button'
+            type={buttonType}
+            onClick={onclick}
+        >
+            {
+                loading ?
+                    <Spinner size='sm'/>
+                    :
+                    title
+            }
+        </Button>
+    )
+
+
+export default CustomButton

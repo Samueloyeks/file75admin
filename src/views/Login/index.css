@@ -1,0 +1,14 @@
+.login-container{
+    width: 17%;
+    height: 50%;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    margin: -70px 0 0 -170px;
+}
+
+.login-view {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}

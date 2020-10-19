@@ -4,11 +4,22 @@ import './index.css';
 import App from './App';
 import Login from '../src/views/Login'
 import * as serviceWorker from './serviceWorker';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Routes from './Routes';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {store} from './store';
+import { Provider } from 'react-redux'
+
+// const store = configureStore();
+
+
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Login />
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Provider store={store}>
+    <Routes />
+  </Provider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 
