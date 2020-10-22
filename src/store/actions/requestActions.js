@@ -1,18 +1,18 @@
-import { taskConstants } from '../constants';
+import { requestConstants } from '../constants';
 import { alertActions } from './alertActions';
-import { taskService } from '../../services';
+import { requestService } from '../../services';
 
-export const taskActions = {
-    getTasks
+export const requestActions = {
+    getRequests
 };
 
 
 
-function getTasks(params) {
+function getRequests(params) {
     return dispatch => {
         dispatch(request(params));
 
-        taskService.getTasks(params)
+        requestService.getRequests(params)
             .then(resp => {
                 if (resp && resp.data) {
                     dispatch(success(resp.data.result));
@@ -27,9 +27,9 @@ function getTasks(params) {
     }
 
 
-    function request(params) { return { type: taskConstants.GET_TASKS_REQUEST,params } }
-    function success(data) { return { type: taskConstants.GET_TASKS_SUCCESS, data } }
-    function failure(data) { return { type: taskConstants.GET_TASKS_FAILURE, data } }
+    function request(params) { return { type: requestConstants.GET_REQUESTS_REQUEST,params } }
+    function success(data) { return { type: requestConstants.GET_REQUESTS_SUCCESS, data } }
+    function failure(data) { return { type: requestConstants.GET_REQUESTS_FAILURE, data } }
 }
 
 

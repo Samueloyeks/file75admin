@@ -1,45 +1,24 @@
-import React, { useEffect, useState } from "react";
-import Home from '../../assets/svg/Home.svg';
-
 const SidebarItems = [
     {
-        // name: "THE ITALIAN JOB",
-        route: '/',
-        icon: <Home />
-    },
-    {
-        name: "Client managment",
-        subTitle: "Requests, Deployed, Finished, Sta...",
-        route: '/dashboard',
-        children: [
-            {
-                name: "Requests",
-                route: "/"
-            },
-            {
-                name: "Deployed",
-                route: "/" 
-            },
-            {
-                name: "Finished",
-                route: "/login"
-            },
-            {
-                name: "Statistics",
-                route: "/"
-            },
-        ]
-    },
-    {
-        name: "Administrator managment",
-        subTitle: "Create user, Delete user, Edit user, Update user",
-        route: '/login'
-    },
-    {
-        name: "Customer Support",
-        subTitle: "Call customer, Email customer, Re...",
+        name: "THE ITALIAN JOB",
         route: '/'
-    }
+    },
+    {
+        name: "Dashboard",
+        route: '/dashboard',
+    },
+    {
+        name: "Page 1",
+        route: '/page-1'
+    },
+    {
+        name: "Page 2",
+        route: '/page-2'
+    },
+    {
+        name: "Page 3",
+        route: 'page-3'
+    },
 ];
 
 export default SidebarItems;

@@ -1,6 +1,10 @@
 import { userConstants } from '../constants';
 import { alertActions } from './alertActions';
 import { userService } from '../../services';
+import { persistStore, persistReducer } from 'redux-persist';
+import {store} from '../../store';
+
+
 
 
 
@@ -114,9 +118,8 @@ function forgotPassword(data) {
 
 function logout() {
     return dispatch => {
-        userService.logout()
+        userService.logout() 
             .then(() => {
-                // const store = configureStore();
                 // persistStore(store).purge();
                 dispatch(success())
             }

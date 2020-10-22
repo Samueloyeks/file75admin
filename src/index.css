@@ -12,6 +12,7 @@ html, body, #root, #app>div {
   width: 100% !important;
   background-color: #EFEFEF;
   font-family: Montserrat;
+  color: #4D4D4D;
   /* position: fixed; */
 }
 
@@ -47,6 +48,10 @@ code {
 }
 
 .file-text-small{
+  font-size: 12px;
+}
+
+.file-text-smaller{
   font-size: 10px;
 }
 
@@ -207,3 +212,20 @@ code {
   margin-left: 50px;
   margin-right: 50px;
 }
+
+.border-top{
+  border-top: 0.5px solid #4D4D4D;
+}
+
+.border-bottom{
+  border-bottom: 0.5px solid #4D4D4D;
+}
+
+.border-left{
+  border-left: 0.5px solid #4D4D4D;
+}
+
+.border-right{
+  border-right: 0.5px solid #4D4D4D;
+}
+

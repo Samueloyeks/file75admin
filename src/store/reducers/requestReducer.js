@@ -1,16 +1,16 @@
-import { taskConstants } from '../constants';
+import { requestConstants } from '../constants';
 
-const GET_TASKS_REQUEST = taskConstants.GET_TASKS_REQUEST
-const GET_TASKS_FAILURE = taskConstants.GET_TASKS_FAILURE
-const GET_TASKS_SUCCESS = taskConstants.GET_TASKS_SUCCESS
+const GET_REQUESTS_REQUEST = requestConstants.GET_REQUESTS_REQUEST
+const GET_REQUESTS_FAILURE = requestConstants.GET_REQUESTS_FAILURE
+const GET_REQUESTS_SUCCESS = requestConstants.GET_REQUESTS_SUCCESS
 
 
 
-export function taskReducer(state = {
+export function requestReducer(state = {
     loading: false,
     refresh: false,
     params: {
-        associations: ["status","category"],
+        associations: ["status","category","user","adminStatus"],
         page: 1,
         perPage: 30,
         search: null,
@@ -19,27 +19,27 @@ export function taskReducer(state = {
         byCategorycode: null,
     },
     total: 0,
-    tasks: []
+    requests: []
 }, action) { 
     switch (action.type) {
-        case GET_TASKS_REQUEST:
+        case GET_REQUESTS_REQUEST:
             return {
                 ...state,
                 loading: true,
                 params: state.params
             }
-        case GET_TASKS_FAILURE:
+        case GET_REQUESTS_FAILURE:
             return {
                 ...state,
                 loading: false,
                 params: state.params
             }
-        case GET_TASKS_SUCCESS:
+        case GET_REQUESTS_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 params: state.params,
-                tasks: action.data
+                requests: action.data
             }
         default:
             return state

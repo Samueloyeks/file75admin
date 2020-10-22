@@ -28,6 +28,7 @@ module.exports = {
     },
     devServer: {
         contentBase: resolveAppPath('public'),
+        historyApiFallback: true,
         compress: true,
         hot: true,
         host,

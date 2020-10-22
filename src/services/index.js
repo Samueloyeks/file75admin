@@ -1,6 +1,6 @@
 const { userService } = require("./userService");
 const { reservationService } = require("./reservationService");
-const { taskService } = require("./taskService");
+const { requestService } = require("./requestService");
 const { serviceService } = require("./serviceService");
 
 
@@ -9,6 +9,6 @@ const { serviceService } = require("./serviceService");
 export {
     userService,
     reservationService,
-    taskService,
+    requestService,
     serviceService
 }

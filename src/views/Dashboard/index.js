@@ -1,11 +1,13 @@
 import React from 'react';
+import './index.css';
 
 function Dashboard(props) {
-    // console.log("Dashboard props", props);
     return (
-        <div className="App">
-            <h2>I'm the dashboard.</h2>
-            <p>You love me &lt;3 </p>
+        <div style={{ height: '100vh' }}>
+            <h4 className='dashboard-welcome'>Welcome to
+            <h4 className='file-primary file-text-bold spaced'> File </h4>
+            administrator panel.
+            </h4>
         </div>
     );
 }

@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Routes from './Routes';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {store} from './store';
+import {configureStore} from './store'
 import { Provider } from 'react-redux'
 
 // const store = configureStore();

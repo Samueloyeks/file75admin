@@ -9,15 +9,15 @@ import axios from 'axios';
 // } from 'react-native-dotenv';
 
 
-const baseURL = process.env.ADMIN_API_DEV_URL
+const baseURL = process.env.API_LOCAL_URL
 // const baseURL = API_LOCAL_URL;
 
-
-export const taskService = {
-    getTasks
+ 
+export const requestService = {
+    getRequests
 };
 
-async function getTasks(params) {
+async function getRequests(params) {
     const token = await getToken();
     params.associations = await encodeAssociations(params.associations);
     const config = {

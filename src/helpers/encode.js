@@ -36,9 +36,18 @@ export async function formatDate(ISOString) {
     let year = date.getFullYear();
     let time = formatAMPM(date);
 
-    str += day + ' ' + month + ' ' + year + ', ' + time;
+    str += day + ' ' + month + ' ' + year;
 
     return str;
+}
+
+export async function dateToTime(ISOString) {
+
+    var date = new Date(ISOString); 
+    let time = formatAMPM(date);
+
+
+    return time;
 }
 
 export async function convertToTimestamp(ISOString) {

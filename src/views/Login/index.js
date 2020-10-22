@@ -74,7 +74,6 @@ class index extends Component {
 
         if (isAuthenticated !== prevProps.isAuthenticated && isAuthenticated) {
             history.push("/dashboard");
-            useHistory.pu
         }
     }
 

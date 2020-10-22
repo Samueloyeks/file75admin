@@ -19,7 +19,7 @@
 
 .header {
     position: sticky;
-    z-index: 1;
+    z-index: 3;
     top: 0;
     /* width: 100%; */
     background-color: white;
@@ -46,6 +46,8 @@
     border-top: 1px solid #CDCDCD;
     border-bottom: 1px solid #CDCDCD;
     padding: 5px 20px;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
 }
 
 .vertical-align-text{
@@ -54,4 +56,63 @@
 
 .request-card {
     background-color: #FFFFFF;
+    border-bottom: 0.5px solid #A7A7A7;
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right: 10px;
 }
+
+.active-card{
+    background-color: #C4C4C4;
+}
+
+.user-avatar{
+    margin: 5px;
+    display:inline-block;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.user-avatar>div{
+    background-color: #d39e00 !important 
+}
+
+.avatar-dropdown{
+    display: inline-block;
+}
+
+.avatar-dropdown > button{
+    cursor: pointer !important;
+    /* display: none; */
+    background-color: transparent !important;
+    border: none  !important;
+    padding: 0 !important;
+    display: inline-block !important;
+    margin: 0 !important;
+}
+
+.avatar-dropdown>.btn-secondary.focus, .btn-secondary:focus{
+    border:none !important;
+    border-color: #FFFFFF !important;
+    outline: none !important;
+}
+
+.copy-box{
+    background-color: #F5F5F5;
+    display: flex;
+    padding: 10px;
+    margin: auto;
+    text-transform: capitalize;
+    justify-content: space-between;
+}
+
+.deploy-button{
+    width: 100%;
+    background-color: #C4C4C4 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 15px !important;
+    color:'#4D4D4D';
+    font-weight: bold;
+}
+

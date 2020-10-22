@@ -10,7 +10,7 @@ const baseURL = process.env.API_LOCAL_URL
 export const userService = {
     login,
     signup,
-    forgotPassword,
+    forgotPassword, 
     logout
 };
 
@@ -25,7 +25,8 @@ async function login(data) {
             const userData = {
                 email: user.email,
                 fullName: user.fullName,
-                id: user._id
+                id: user._id,
+                adminId: user.adminId
             }
             await db.set('userToken', userToken);
             await db.set('userData', JSON.stringify(userData));
@@ -51,9 +52,9 @@ async function signup(data) {
             const userData = {
                 email: user.email,
                 fullName: user.fullName,
-                id: user._id
+                id: user._id,
+                adminId: user.adminId
             }
-            console.log(userData)
             await db.set('userToken', userToken);
             await db.set('userData', JSON.stringify(userData));
 

@@ -5,11 +5,13 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 
+
 const persistConfig = {
     key: 'user',
     storage: storage,
-    whitelist: ['user'] // which reducer want to store
+    whitelist: ['user'] 
   };
+
 
   const pReducer = persistReducer(persistConfig, rootReducer);
   const middleware = applyMiddleware(thunkMiddleware);

@@ -1,7 +1,7 @@
 const { userConstants } = require("./userConstants");
 const { alertConstants } = require("./alertConstants");
 const { reservationConstants } = require("./reservationConstants");
-const { taskConstants } = require("./taskConstants");
+const { requestConstants } = require("./requestConstants");
 const { serviceConstants } = require("./serviceConstants");
 
 
@@ -13,6 +13,6 @@ export {
     userConstants,
     alertConstants,
     reservationConstants,
-    taskConstants,
+    requestConstants,
     serviceConstants
 }

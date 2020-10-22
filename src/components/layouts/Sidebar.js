@@ -18,7 +18,7 @@ import './index.css';
 
 const styles = {
   list: {
-    width: 350,
+    width: 300,
   },
   links: {
     textDecoration: 'none',
@@ -31,19 +31,16 @@ const styles = {
   }
 };
 
-function Sidebar(props, { defaultActive, defaultActiveSub }) {
+function Sidebar(props, { defaultActiveSub }) {
   const location = props.history.location;
-  const lastActiveIndexString = localStorage.getItem("lastActiveIndex");
   const lastActiveSubIndexString = localStorage.getItem("lastActiveSubIndex");
 
-  const lastActiveIndex = Number(lastActiveIndexString);
   const lastActiveSubIndex = Number(lastActiveSubIndexString);
 
-  const [activeIndex, setActiveIndex] = useState(lastActiveIndex || defaultActive);
-  const [activeSubIndex, setActiveSubIndex] = useState(lastActiveSubIndex || defaultActiveSub);
+  const [activeSubIndex, setActiveSubIndex] = useState(13 || defaultActiveSub);
 
-  const [menu1, setMenu1] = useState(false)
-  const [menu2, setMenu2] = useState(false)
+  const [menu1, setMenu1] = useState(true)
+  const [menu2, setMenu2] = useState(true)
   const [menu3, setMenu3] = useState(false)
 
 
@@ -70,10 +67,6 @@ function Sidebar(props, { defaultActive, defaultActiveSub }) {
     }
   }
 
-  function changeActiveIndex(newIndex) {
-    localStorage.setItem("lastActiveIndex", newIndex)
-    setActiveIndex(newIndex)
-  }
 
   function changeActiveSubIndex(newIndex) {
     localStorage.setItem("lastActiveSubIndex", newIndex)
@@ -176,12 +169,12 @@ const SidebarParent = styled.div`
   }
   
   & > div {
-    width: 350px;
+    width: 300px;
     height: 100vh;
   }
   
   .behind-the-scenes {
-    width: 350px;
+    width: 300px;
     
   }
 `;
