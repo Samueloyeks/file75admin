@@ -14,7 +14,8 @@ const baseURL = process.env.API_LOCAL_URL
 
  
 export const requestService = {
-    getRequests
+    getRequests,
+    deployRequest
 };
 
 async function getRequests(params) {
@@ -31,6 +32,26 @@ async function getRequests(params) {
 
     try {
         const resp = await axios.get(url, config);
+        if (resp.data) {
+            return resp.data;
+        }
+    } catch (error) {
+        console.log(error)
+        return error;
+    }
+}
+
+async function deployRequest(request) {
+    const token = await getToken();
+    const config = {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }
+    const url = `${baseURL}/reservation/deploy/${request._id}`;
+
+    try {
+        const resp = await axios.put(url,request, config);
         if (resp.data) {
             return resp.data;
         }

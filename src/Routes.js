@@ -5,6 +5,7 @@ import Login from "./views/Login";
 import NotFound from "./views/NotFound";
 import Dashboard from "./views/Dashboard";
 import ClientRequests from "./views/ClientRequests";
+import ClientDeploys from "./views/ClientDeploys";
 import { connect } from "react-redux";
 import Layout from './components/layouts/Layout';
 
@@ -42,7 +43,7 @@ function Routes(props) {
                                 <Route path="/" exact component={Dashboard} />
                                 <Route path="/dashboard" exact component={Dashboard} />
                                 <Route path="/requests" component={ClientRequests} />
-                                <Route path="/deployed" component={Login} />
+                                <Route path="/deployed" component={ClientDeploys} />
                                 <Route component={NotFound} />
                             </Switch>
                         </Layout>

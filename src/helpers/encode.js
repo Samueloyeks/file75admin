@@ -1,6 +1,6 @@
 
 
-export async function encodeAssociations(associations) {
+export  function encodeAssociations(associations) {
     if (Array.isArray(associations)) {
         let str = associations[0];
 
@@ -13,7 +13,7 @@ export async function encodeAssociations(associations) {
     }
 }
 
-export async function formatDate(ISOString) {
+export function formatDate(ISOString) {
     const months = [
         'Jan',
         'Feb',
@@ -34,14 +34,14 @@ export async function formatDate(ISOString) {
     let day =  date.getDate();
     let month = months[date.getMonth()];
     let year = date.getFullYear();
-    let time = formatAMPM(date);
+    // let time = formatAMPM(date);
 
     str += day + ' ' + month + ' ' + year;
 
     return str;
 }
 
-export async function dateToTime(ISOString) {
+export function dateToTime(ISOString) {
 
     var date = new Date(ISOString); 
     let time = formatAMPM(date);

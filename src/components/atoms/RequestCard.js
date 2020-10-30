@@ -5,6 +5,8 @@ import './index.css'
 // svg 
 import Clock from '../../assets/svg/Clock.svg';
 import Unattended from '../../assets/svg/Unattended.svg';
+import Deployed from '../../assets/svg/Deployed.svg';
+import UploadGrey from '../../assets/svg/UploadGrey.svg';
 import NRTag from '../../assets/svg/NRTag.svg';
 
 // components 
@@ -23,7 +25,7 @@ const RequestCard = (props) => (
                     props.request.adminStatus.code === 'unattended' ?
                         <div><Clock /><Unattended /></div>
                         :
-                        null
+                        <div><UploadGrey /><Deployed /></div>
                 }
             </Col>
             <Col sm='3' style={{margin:'auto'}}>

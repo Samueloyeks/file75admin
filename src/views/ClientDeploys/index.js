@@ -11,7 +11,7 @@ import { getUser } from '../../helpers/auth';
 // components 
 import SearchBar from '../../components/atoms/SearchBar';
 import RequestTable from '../../components/layouts/RequestTable';
-import RequestView from '../../components/layouts/RequestView';
+import DeployView from '../../components/layouts/DeployView';
 
 
 function mapStateToProps(state) {
@@ -71,7 +71,7 @@ class index extends Component {
     async silentlyGetRequests() {
         const { params, getRequests } = this.props;
         params.getRequestsSilently = true;
-        params.byAdminStatusCode = 'unattended';
+        params.byAdminStatusCode = 'deployed';
 
         await getRequests(params);
     }
@@ -79,16 +79,16 @@ class index extends Component {
     async searchFilterFunction(text) {
         const { getRequests, params } = this.props;
         params.search = text
-        params.byAdminStatusCode = 'unattended';
+        params.byAdminStatusCode = 'deployed';
 
         await getRequests(params);
     };
 
     async handleDeployRequest(request) {
-        const { deployRequest } = this.props;
+        // const { deployRequest } = this.props;
 
-        await deployRequest(request);
-        this.silentlyGetRequests()
+        // await deployRequest(request);
+        // this.silentlyGetRequests()
     };
 
     async filterRequests(service) {
@@ -102,7 +102,7 @@ class index extends Component {
             this.setState({ sortedby: service.category })
         }
 
-        params.byAdminStatusCode = 'unattended';
+        params.byAdminStatusCode = 'deployed';
         await getRequests(params);
     }
 
@@ -121,7 +121,7 @@ class index extends Component {
         const { getRequests, params, getServices,clearActiveRequest } = this.props;
         const userData = await getUser();
         params.byAdminId = userData.adminId;
-        params.byAdminStatusCode = 'unattended';
+        params.byAdminStatusCode = 'deployed';
 
         clearActiveRequest()
         await getRequests(params);
@@ -145,7 +145,7 @@ class index extends Component {
                 <Row style={{ margin: 0 }}>
                     <Col sm='6' className='border-right no-padding'>
                         <SearchBar
-                            totalText="3,498 Pending"
+                            totalText="1,233 deployed"
                             value={params.search}
                             search={this.searchFilterFunction}
                         />
@@ -162,7 +162,7 @@ class index extends Component {
                     <Col sm='6' className='border-left no-padding'>
                         {
                             activeRequest ?
-                                <RequestView
+                                <DeployView
                                     request={activeRequest}
                                     close={this.close}
                                     deploying={deploying}

@@ -39,8 +39,8 @@ function Sidebar(props, { defaultActiveSub }) {
 
   const [activeSubIndex, setActiveSubIndex] = useState(13 || defaultActiveSub);
 
-  const [menu1, setMenu1] = useState(true)
-  const [menu2, setMenu2] = useState(true)
+  const [menu1, setMenu1] = useState(false)
+  const [menu2, setMenu2] = useState(false)
   const [menu3, setMenu3] = useState(false)
 
 

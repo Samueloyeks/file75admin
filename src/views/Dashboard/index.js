@@ -5,7 +5,7 @@ function Dashboard(props) {
     return (
         <div style={{ height: '100vh' }}>
             <h4 className='dashboard-welcome'>Welcome to
-            <h4 className='file-primary file-text-bold spaced'> File </h4>
+            <span className='file-primary file-text-bold spaced'> File </span>
             administrator panel.
             </h4>
         </div>

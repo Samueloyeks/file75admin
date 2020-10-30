@@ -116,3 +116,17 @@
     font-weight: bold;
 }
 
+.uploadContainer{
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 20px;
+    border: 2px dashed #A7A7A7;
+    padding: 40px 20px;
+}
+
+.clickable{
+    cursor: pointer;
+}
+

@@ -17,7 +17,7 @@ import CustomButton from '../../components/atoms/CustomButton';
 function mapStateToProps(state) {
     const loading = state.user.loading;
     const isAuthenticated = state.user.isAuthenticated;
-
+ 
 
     return {
         loading,

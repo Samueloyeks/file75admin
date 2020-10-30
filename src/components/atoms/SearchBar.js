@@ -12,6 +12,7 @@ const CustomInput = ({
     type,
     onChange,
     search,
+    totalText,
     ...rest
 }) => {
     const [text, setText] = useState('');
@@ -24,7 +25,7 @@ const CustomInput = ({
         <div className='requestSearchContainer'>
             <Row>
                 <Col sm='4' className='float-left'>
-                    <p className='file-text-bold vertical-align-text file-text-large'>3,498 requests </p>
+                    <p className='file-text-bold vertical-align-text file-text-large'>{totalText} </p>
                 </Col>
                 <Col sm='8' style={{ margin: 'auto' }}>
                     {/* <Input
