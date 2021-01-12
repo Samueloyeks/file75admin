@@ -26,8 +26,12 @@ const menuItems = [
         "url": "/finished"
       },
       {
-        "name": "Statistics",
-        "url": "/stats"
+        "name": "Declined",
+        "url": "/declined"
+      },
+      {
+        "name": "Report",
+        "url": "/report"
       }
     ]
   },

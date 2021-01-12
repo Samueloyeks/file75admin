@@ -12,28 +12,18 @@ import Info from '../../assets/svg/Info.svg';
 // components 
 import DateText from '../atoms/DateText';
 import TimeText from '../atoms/TimeText';
-import Upload from '../atoms/Upload';
+import CopyBox from '../atoms/CopyBox';
 
 
 
-const DeployView = ({
+const FinishedView = ({
     request,
-    close,
-    finishing,
-    rejecting,
-    finishRequest,
-    rejectRequest
-}) => {
-
-    const addUploadFiles = (files) => {
-        request.responseFiles = files
-    }
-
-    return (
+    close
+}) => (
         <div>
             <Row className='p-3 border-bottom' style={{ backgroundColor: 'F5F5F5', marginLeft: 0 }}>
                 <Col style={{ textAlign: 'left' }}>
-                    <p className='file-text-bold' style={{ margin: 'unset' }}>Finish</p>
+                    <p className='file-text-bold' style={{ margin: 'unset' }}>Client</p>
                 </Col>
                 <Col style={{ textAlign: 'right' }}>
                     <div style={{ cursor: 'pointer' }} onClick={() => close()}>
@@ -65,38 +55,34 @@ const DeployView = ({
             </Row>
 
             <div style={{ backgroundColor: '#FFF' }}>
-                <p className='file-text-bold file-text-large ph-3 pv-4'>ATTACH DOCUMENTS:</p>
-                <Upload
-                    updateFiles={(files) => addUploadFiles(files)}
-                />
-                <div style={{ padding: 15,justifyContent:'space-between',display:'flex' }}>
-                    <Button
-                        className='reject-button'
-                        onClick={() => rejectRequest(request)}
-                    >
-                        {
-                            rejecting ?
-                                <Spinner />
-                                :
-                                'Send as Declined'
-                        }
-                    </Button>
+                <Row className='p-4'>
+                    <Col sm='4' style={{ margin: 'auto' }}>
+                        <p className='file-text-bold no-margin'>FIRST CHOICE:</p>
+                    </Col>
+                    <Col sm='8' >
+                        <CopyBox text={request.companyName1} />
+                    </Col>
+                </Row>
 
-                    <Button
-                        className='finish-button'
-                        onClick={() => finishRequest(request)}
-                    >
-                        {
-                            finishing ?
-                                <Spinner />
-                                :
-                                'Send as Approved'
-                        }
-                    </Button>
-                </div>
+                <Row className='p-4'>
+                    <Col sm='4' style={{ margin: 'auto' }}>
+                        <p className='file-text-bold no-margin'>SECOND CHOICE:</p>
+                    </Col>
+                    <Col sm='8'>
+                        <CopyBox text={request.companyName2} />
+                    </Col>
+                </Row>
+
+                <Row className='p-4'>
+                    <Col sm='4' style={{ margin: 'auto' }}>
+                        <p className='file-text-bold no-margin'>PHONE NUMBER:</p>
+                    </Col>
+                    <Col sm='8'>
+                        <CopyBox text={request.phone} />
+                    </Col>
+                </Row>
             </div>
         </div>
     )
-}
 
-export default DeployView;
+export default FinishedView;

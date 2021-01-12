@@ -10,12 +10,12 @@ import { getUser } from '../../helpers/auth';
 
 // components 
 import SearchBar from '../../components/atoms/SearchBar';
-import RequestTable from '../../components/layouts/RequestTable';
-import RequestView from '../../components/layouts/RequestView';
-import BusRegRequestView from '../../components/layouts/BusRegRequestView';
-import CompanyRegRequestView from '../../components/layouts/CompanyRegRequestView';
-import IndividualRegRequestView from '../../components/layouts/IndividualRegRequestView';
-import CustomModal from '../../components/atoms/CustomModal';
+import RequestTable from '../../components/layouts/FinishedTable';
+import RequestView from '../../components/layouts/FinishedView';
+import DeclinedTable from '../../components/layouts/DeclinedTable';
+import FinishedView from '../../components/layouts/FinishedView';
+import BusRegFinishedView from '../../components/layouts/BusRegFinishedView';
+import IndividualRegFinishedView from '../../components/layouts/IndividualRegFinishedView';
 
 
 
@@ -24,7 +24,6 @@ function mapStateToProps(state) {
         loading,
         requests,
         params,
-        deploying,
         activeRequestIndex,
         activeRequest
     } = state.requests;
@@ -35,7 +34,6 @@ function mapStateToProps(state) {
         requests,
         services,
         params,
-        deploying,
         activeRequestIndex,
         activeRequest
     };
@@ -46,7 +44,6 @@ function mapDispatchToProps(dispatch) {
     return {
         getRequests: (params) => dispatch(requestActions.getRequests(params)),
         getServices: () => dispatch(serviceActions.getServices()),
-        deployRequest: (request, service) => dispatch(requestActions.deployRequest(request, service)),
         setActiveRequest: (request, index) => dispatch(requestActions.setActiveRequest(request, index)),
         clearActiveRequest: () => dispatch(requestActions.clearActiveRequest())
     };
@@ -72,14 +69,12 @@ class index extends Component {
         this.activate = this.activate.bind(this)
         this.close = this.close.bind(this)
         this.silentlyGetRequests = this.silentlyGetRequests.bind(this)
-        this.handleDeployRequest = this.handleDeployRequest.bind(this)
-        this.toggleConfirmModal = this.toggleConfirmModal.bind(this)
     }
 
     async silentlyGetRequests() {
         const { params, getRequests } = this.props;
         params.getRequestsSilently = true;
-        params.byAdminStatusCode = 'unattended';
+        params.byAdminStatusCode = 'finished';
 
         await getRequests(params);
     }
@@ -87,26 +82,12 @@ class index extends Component {
     async searchFilterFunction(text) {
         const { getRequests, params } = this.props;
         params.search = text
-        params.byAdminStatusCode = 'unattended';
+        params.byAdminStatusCode = 'finished';
 
         await getRequests(params);
     };
 
-    async handleDeployRequest() {
-        const { preparedRequest, showModal } = this.state;
-        const { deployRequest } = this.props;
 
-        this.setState({ showModal: !showModal });
-
-        let service = null;
-        if (preparedRequest.category.code === 'name_rsv') service = 'reservation'
-        else if (preparedRequest.category.code === 'business_reg') service = 'businessReg'
-        else if (preparedRequest.category.code === 'company_reg') service = 'companyReg'
-        else service = 'reservation'
-
-        await deployRequest(preparedRequest, service);
-        this.silentlyGetRequests()
-    };
 
     async filterRequests(service) {
         const { getRequests, params } = this.props;
@@ -116,9 +97,10 @@ class index extends Component {
             this.setState({ sortedby: null });
         } else {
             params.byCategorycode = service.code;
+            this.setState({ sortedby: service.category })
         }
 
-        params.byAdminStatusCode = 'unattended';
+        params.byAdminStatusCode = 'finished';
         await getRequests(params);
     }
 
@@ -133,19 +115,12 @@ class index extends Component {
         clearActiveRequest()
     }
 
-    toggleConfirmModal(request) {
-        const { showModal } = this.state
-        this.setState({
-            showModal: !showModal,
-            preparedRequest: request
-        })
-    }
 
     async componentDidMount() {
         const { getRequests, params, getServices, clearActiveRequest } = this.props;
         const userData = await getUser();
         params.byAdminId = userData.adminId;
-        params.byAdminStatusCode = 'unattended';
+        params.byAdminStatusCode = 'rejected';
 
         clearActiveRequest()
         await getRequests(params);
@@ -161,30 +136,19 @@ class index extends Component {
     }
 
     render() {
-        const { loading, requests, services, params, deploying, activeRequest, activeRequestIndex } = this.props;
+        const { loading, requests, services, params, activeRequest, activeRequestIndex } = this.props;
         const { sortedby, showModal } = this.state;
 
         let ActiveView = null;
         if (activeRequest && activeRequest.category.code === 'name_rsv') ActiveView = RequestView
         else if (activeRequest && activeRequest.category.code === 'business_reg') {
-            if (activeRequest && activeRequest.type && activeRequest.type === 'company') ActiveView = BusRegRequestView
-            else if (activeRequest && activeRequest.type && activeRequest.type === 'individual') ActiveView = IndividualRegRequestView
-            else ActiveView = BusRegRequestView
-        } else if (activeRequest && activeRequest.category.code === 'company_reg') {
-            if (activeRequest && activeRequest.type && activeRequest.type === 'limited') ActiveView = CompanyRegRequestView
-            else if (activeRequest && activeRequest.type && activeRequest.type === 'unlimited') ActiveView = IndividualRegRequestView
-            else if (activeRequest && activeRequest.type && activeRequest.type === 'limitedByGuarantee') ActiveView = CompanyRegRequestView
-            else ActiveView = BusRegRequestView
+            if (activeRequest && activeRequest.type && activeRequest.type === 'company') ActiveView = BusRegFinishedView
+            else if (activeRequest && activeRequest.type && activeRequest.type === 'individual') ActiveView = IndividualRegFinishedView
+            else ActiveView = BusRegFinishedView
         }
 
         return (
             <div>
-                <CustomModal
-                    body='Are you sure you want to proceed?'
-                    modal={showModal}
-                    toggle={this.toggleConfirmModal}
-                    action={this.handleDeployRequest}
-                />
                 <Row style={{ margin: 0 }}>
                     <Col sm='6' className='border-right no-padding'>
                         <SearchBar
@@ -192,7 +156,7 @@ class index extends Component {
                             value={params.search}
                             search={this.searchFilterFunction}
                         />
-                        <RequestTable 
+                        <DeclinedTable
                             requests={requests}
                             services={services}
                             sortedby={sortedby}
@@ -208,8 +172,6 @@ class index extends Component {
                                 <ActiveView
                                     request={activeRequest}
                                     close={this.close}
-                                    deploying={deploying}
-                                    deployRequest={this.toggleConfirmModal}
                                 />
                                 :
                                 null

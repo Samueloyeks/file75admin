@@ -9,6 +9,14 @@ const DEPLOY_REQUEST_REQUEST = requestConstants.DEPLOY_REQUEST_REQUEST
 const DEPLOY_REQUEST_FAILURE = requestConstants.DEPLOY_REQUEST_FAILURE
 const DEPLOY_REQUEST_SUCCESS = requestConstants.DEPLOY_REQUEST_SUCCESS
 
+const FINISH_REQUEST_REQUEST = requestConstants.FINISH_REQUEST_REQUEST
+const FINISH_REQUEST_FAILURE = requestConstants.FINISH_REQUEST_FAILURE
+const FINISH_REQUEST_SUCCESS = requestConstants.FINISH_REQUEST_SUCCESS
+
+const REJECT_REQUEST_REQUEST = requestConstants.REJECT_REQUEST_REQUEST
+const REJECT_REQUEST_FAILURE = requestConstants.REJECT_REQUEST_FAILURE
+const REJECT_REQUEST_SUCCESS = requestConstants.REJECT_REQUEST_SUCCESS
+
 const SET_ACTIVE_REQUEST = requestConstants.SET_ACTIVE_REQUEST
 const CLEAR_ACTIVE_REQUEST = requestConstants.CLEAR_ACTIVE_REQUEST
 
@@ -30,6 +38,8 @@ export function requestReducer(state = {
     total: 0,
     requests: [],
     deploying: false,
+    finishing: false,
+    rejecting: false,
     activeRequestIndex: null,
     activeRequest: null
 }, action) {
@@ -74,6 +84,36 @@ export function requestReducer(state = {
             return {
                 ...state,
                 deploying: false,
+            }
+        case FINISH_REQUEST_REQUEST:
+            return {
+                ...state,
+                finishing: true,
+            }
+        case FINISH_REQUEST_FAILURE:
+            return {
+                ...state,
+                finishing: false,
+            }
+        case FINISH_REQUEST_SUCCESS:
+            return {
+                ...state,
+                finishing: false,
+            }
+        case REJECT_REQUEST_REQUEST:
+            return {
+                ...state,
+                rejecting: true,
+            }
+        case REJECT_REQUEST_FAILURE:
+            return {
+                ...state,
+                rejecting: false,
+            }
+        case REJECT_REQUEST_SUCCESS:
+            return {
+                ...state,
+                rejecting: false,
             }
         case SET_ACTIVE_REQUEST:
             return {

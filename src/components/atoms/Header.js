@@ -42,6 +42,10 @@ const Header = (props) => {
         props.logout();
     }
 
+    const goToEdit = () => {
+        history.push("/edit-profile");
+    }
+
     return (
         <div className='header'>
             <Logo />
@@ -55,9 +59,17 @@ const Header = (props) => {
                         />
                     </DropdownToggle>
                     <DropdownMenu right>
-                        <DropdownItem header>{props.userData.fullName}</DropdownItem>
-                        <DropdownItem divider />
-                        <DropdownItem onClick={() => handleLogout()}>Log out</DropdownItem>
+                        <div style={{ textAlign: 'center' }}>
+                            <UserAvatar
+                                className='user-avatar'
+                                size="50"
+                                name={props.userData.fullName}
+                            />
+                            <DropdownItem header>{props.userData.fullName}</DropdownItem>
+                            <DropdownItem divider />
+                            <DropdownItem onClick={() => goToEdit()}>Edit profile</DropdownItem>
+                            <DropdownItem onClick={() => handleLogout()}>Sign out</DropdownItem>
+                        </div>
                     </DropdownMenu>
                 </Dropdown>
 

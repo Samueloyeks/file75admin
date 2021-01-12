@@ -6,7 +6,9 @@ export const requestActions = {
     getRequests,
     deployRequest,
     setActiveRequest,
-    clearActiveRequest
+    clearActiveRequest,
+    finishRequest,
+    rejectRequest
 };
 
 
@@ -21,8 +23,11 @@ function getRequests(params) {
 
         requestService.getRequests(params)
             .then(resp => {
-                if (resp && resp.data) {
-                    dispatch(success(resp.data.result));
+                if (resp) {
+                    resp.sort(function (a, b) {
+                        return new Date(b.created_at) - new Date(a.created_at);
+                    });
+                    dispatch(success(resp));
                 } else {
                     dispatch(failure('error'));
                     dispatch(alertActions.error('Error'));
@@ -40,14 +45,15 @@ function getRequests(params) {
     function failure(data) { return { type: requestConstants.GET_REQUESTS_FAILURE, data } }
 }
 
-function deployRequest(requestInfo) {
+function deployRequest(requestInfo,service) {
     return dispatch => {
         dispatch(request(requestInfo));
 
-        requestService.deployRequest(requestInfo)
+        requestService.deployRequest(requestInfo,service)
             .then(resp => {
                 if (resp && resp.data) {
                     dispatch(success(resp.data.result));
+                    dispatch(alertActions.success('Request Deployed'));
                     dispatch(clearRequest());
                 } else {
                     dispatch(failure('error'));
@@ -63,7 +69,61 @@ function deployRequest(requestInfo) {
     function request(requestInfo) { return { type: requestConstants.DEPLOY_REQUEST_REQUEST, requestInfo } }
     function success(data) { return { type: requestConstants.DEPLOY_REQUEST_SUCCESS, data } }
     function failure(data) { return { type: requestConstants.DEPLOY_REQUEST_FAILURE, data } }
-    function clearRequest(request, index) { return { type: requestConstants.CLEAR_ACTIVE_REQUEST } }
+    function clearRequest() { return { type: requestConstants.CLEAR_ACTIVE_REQUEST } }
+}
+
+function finishRequest(requestInfo,service) {
+    return dispatch => {
+        dispatch(request(requestInfo));
+
+        requestService.finishRequest(requestInfo,service)
+            .then(resp => {
+                if (resp && resp.data) {
+                    dispatch(success(resp.data.result));
+                    dispatch(alertActions.success('Request Finished'));
+                    dispatch(clearRequest());
+                } else {
+                    dispatch(failure('error'));
+                    dispatch(alertActions.error('Error'));
+                }
+            }, error => {
+                dispatch(failure(error.toString()));
+                dispatch(alertActions.error(error.toString()));
+            })
+    }
+
+
+    function request(requestInfo) { return { type: requestConstants.FINISH_REQUEST_REQUEST, requestInfo } }
+    function success(data) { return { type: requestConstants.FINISH_REQUEST_SUCCESS, data } }
+    function failure(data) { return { type: requestConstants.FINISH_REQUEST_FAILURE, data } }
+    function clearRequest() { return { type: requestConstants.CLEAR_ACTIVE_REQUEST } }
+}
+
+function rejectRequest(requestInfo,service) {
+    return dispatch => {
+        dispatch(request(requestInfo));
+
+        requestService.rejectRequest(requestInfo,service)
+            .then(resp => {
+                if (resp && resp.data) {
+                    dispatch(success(resp.data.result));
+                    dispatch(alertActions.success('Request Rejected'));
+                    dispatch(clearRequest());
+                } else {
+                    dispatch(failure('error'));
+                    dispatch(alertActions.error('Error'));
+                }
+            }, error => {
+                dispatch(failure(error.toString()));
+                dispatch(alertActions.error(error.toString()));
+            })
+    }
+
+
+    function request(requestInfo) { return { type: requestConstants.REJECT_REQUEST_REQUEST, requestInfo } }
+    function success(data) { return { type: requestConstants.REJECT_REQUEST_SUCCESS, data } }
+    function failure(data) { return { type: requestConstants.REJECT_REQUEST_FAILURE, data } }
+    function clearRequest() { return { type: requestConstants.CLEAR_ACTIVE_REQUEST } }
 }
 
 function setActiveRequest(request, index) {

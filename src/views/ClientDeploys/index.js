@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
-import { requestActions, serviceActions } from '../../store/actions';
+import { requestActions, serviceActions, alertActions } from '../../store/actions';
 import './index.css';
 import { getUser } from '../../helpers/auth';
 
@@ -10,8 +10,9 @@ import { getUser } from '../../helpers/auth';
 
 // components 
 import SearchBar from '../../components/atoms/SearchBar';
-import RequestTable from '../../components/layouts/RequestTable';
+import DeployTable from '../../components/layouts/DeployTable';
 import DeployView from '../../components/layouts/DeployView';
+import CustomModal from '../../components/atoms/CustomModal';
 
 
 function mapStateToProps(state) {
@@ -19,7 +20,8 @@ function mapStateToProps(state) {
         loading,
         requests,
         params,
-        deploying,
+        finishing,
+        rejecting,
         activeRequestIndex,
         activeRequest
     } = state.requests;
@@ -30,7 +32,8 @@ function mapStateToProps(state) {
         requests,
         services,
         params,
-        deploying,
+        finishing, 
+        rejecting,
         activeRequestIndex,
         activeRequest
     };
@@ -41,7 +44,8 @@ function mapDispatchToProps(dispatch) {
     return {
         getRequests: (params) => dispatch(requestActions.getRequests(params)),
         getServices: () => dispatch(serviceActions.getServices()),
-        deployRequest: (request) => dispatch(requestActions.deployRequest(request)),
+        finishRequest: (request, service) => dispatch(requestActions.finishRequest(request, service)),
+        rejectRequest: (request, service) => dispatch(requestActions.rejectRequest(request, service)),
         setActiveRequest: (request, index) => dispatch(requestActions.setActiveRequest(request, index)),
         clearActiveRequest: () => dispatch(requestActions.clearActiveRequest())
     };
@@ -57,6 +61,10 @@ class index extends Component {
 
         this.state = {
             sortedby: null,
+            uploadFiles: [],
+            showModal: false,
+            showRejectModal: false,
+            preparedRequest: null
         };
         this.interval = null;
 
@@ -65,7 +73,10 @@ class index extends Component {
         this.activate = this.activate.bind(this)
         this.close = this.close.bind(this)
         this.silentlyGetRequests = this.silentlyGetRequests.bind(this)
-        this.handleDeployRequest = this.handleDeployRequest.bind(this)
+        this.handleFinishRequest = this.handleFinishRequest.bind(this)
+        this.handleRejectRequest = this.handleRejectRequest.bind(this)
+        this.toggleConfirmModal = this.toggleConfirmModal.bind(this)
+        this.toggleRejectModal = this.toggleRejectModal.bind(this)
     }
 
     async silentlyGetRequests() {
@@ -84,11 +95,46 @@ class index extends Component {
         await getRequests(params);
     };
 
-    async handleDeployRequest(request) {
-        // const { deployRequest } = this.props;
+    async handleFinishRequest() {
+        const { preparedRequest, showModal } = this.state;
+        const { finishRequest } = this.props;
 
-        // await deployRequest(request);
-        // this.silentlyGetRequests()
+        if (!preparedRequest.responseFiles || preparedRequest.responseFiles.length == 0) {
+            this.setState({ showModal: !showModal });
+            alertActions.error('Please attach document(s)');
+            return;
+        }
+
+        this.setState({ showModal: !showModal });
+
+        let service = null;
+        if (preparedRequest.category.code === 'name_rsv') service = 'reservation'
+        else if (preparedRequest.category.code === 'business_reg') service = 'businessReg'
+        else service = 'reservation'
+
+        await finishRequest(preparedRequest, service);
+        this.silentlyGetRequests()
+    };
+
+    async handleRejectRequest() {
+        const { preparedRequest, showRejectModal } = this.state;
+        const { rejectRequest } = this.props;
+
+        if (!preparedRequest.responseFiles || preparedRequest.responseFiles.length == 0) {
+            this.setState({ showRejectModal: !showRejectModal });
+            alertActions.error('Please attach document(s)');
+            return;
+        }
+
+        this.setState({ showRejectModal: !showRejectModal });
+
+        let service = null;
+        if (preparedRequest.category.code === 'name_rsv') service = 'reservation'
+        else if (preparedRequest.category.code === 'business_reg') service = 'businessReg'
+        else service = 'reservation'
+
+        await rejectRequest(preparedRequest, service);
+        this.silentlyGetRequests()
     };
 
     async filterRequests(service) {
@@ -117,8 +163,26 @@ class index extends Component {
         clearActiveRequest()
     }
 
+    toggleConfirmModal(request) {
+        const { showModal } = this.state
+
+        this.setState({
+            showModal: !showModal,
+            preparedRequest: request
+        })
+    }
+
+    toggleRejectModal(request) {
+        const { showRejectModal } = this.state
+
+        this.setState({
+            showRejectModal: !showRejectModal,
+            preparedRequest: request
+        })
+    }
+
     async componentDidMount() {
-        const { getRequests, params, getServices,clearActiveRequest } = this.props;
+        const { getRequests, params, getServices, clearActiveRequest } = this.props;
         const userData = await getUser();
         params.byAdminId = userData.adminId;
         params.byAdminStatusCode = 'deployed';
@@ -137,11 +201,23 @@ class index extends Component {
     }
 
     render() {
-        const { loading, requests, services, params, deploying, activeRequest, activeRequestIndex } = this.props;
-        const { sortedby, } = this.state;
+        const { loading, requests, services, params, finishing, rejecting, activeRequest, activeRequestIndex } = this.props;
+        const { sortedby, showModal, showRejectModal } = this.state;
 
         return (
             <div>
+                <CustomModal
+                    body='Are you sure you want to proceed?'
+                    modal={showModal}
+                    toggle={this.toggleConfirmModal}
+                    action={this.handleFinishRequest}
+                />
+                <CustomModal
+                    body='Are you sure you want to proceed?'
+                    modal={showRejectModal}
+                    toggle={this.toggleRejectModal}
+                    action={this.handleRejectRequest}
+                />
                 <Row style={{ margin: 0 }}>
                     <Col sm='6' className='border-right no-padding'>
                         <SearchBar
@@ -149,7 +225,7 @@ class index extends Component {
                             value={params.search}
                             search={this.searchFilterFunction}
                         />
-                        <RequestTable
+                        <DeployTable
                             requests={requests}
                             services={services}
                             sortedby={sortedby}
@@ -165,8 +241,10 @@ class index extends Component {
                                 <DeployView
                                     request={activeRequest}
                                     close={this.close}
-                                    deploying={deploying}
-                                    deployRequest={this.handleDeployRequest}
+                                    finishing={finishing}
+                                    rejecting={rejecting}
+                                    finishRequest={this.toggleConfirmModal}
+                                    rejectRequest={this.toggleRejectModal}
                                 />
                                 :
                                 null

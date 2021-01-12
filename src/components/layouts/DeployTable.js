@@ -5,11 +5,11 @@ import './index.css'
 
 // components 
 import RequestTableHeader from '../atoms/RequestTableHeader';
-import UnattendedCard from '../atoms/UnattendedCard';
+import DeployedCard from '../atoms/DeployedCard';
 
 
 
-const RequestTable = ({
+const DeployTable = ({
     name,
     placeholder,
     value,
@@ -37,7 +37,7 @@ const RequestTable = ({
                         </div>
                         :
                         requests.map((request, index) =>
-                            <UnattendedCard 
+                            <DeployedCard
                                 key={index}
                                 index={index}
                                 activate={activate}
@@ -50,4 +50,4 @@ const RequestTable = ({
         </div>
     )
 
-export default RequestTable;
+export default DeployTable;
