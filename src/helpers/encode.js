@@ -1,6 +1,6 @@
 
 
-export  function encodeAssociations(associations) {
+export function encodeAssociations(associations) {
     if (Array.isArray(associations)) {
         let str = associations[0];
 
@@ -30,8 +30,8 @@ export function formatDate(ISOString) {
     ];
 
     var str = ''
-    var date = new Date(ISOString); 
-    let day =  date.getDate();
+    var date = new Date(ISOString);
+    let day = date.getDate();
     let month = months[date.getMonth()];
     let year = date.getFullYear();
     // let time = formatAMPM(date);
@@ -43,15 +43,20 @@ export function formatDate(ISOString) {
 
 export function dateToTime(ISOString) {
 
-    var date = new Date(ISOString); 
+    var date = new Date(ISOString);
     let time = formatAMPM(date);
 
 
     return time;
 }
 
+export function formatCamelCase(text) {
+    return text.replace(/([A-Z])/g, ' $1')
+        .replace(/^./, function (str) { return str.toUpperCase(); })
+}
+
 export async function convertToTimestamp(ISOString) {
-    return Math.round(new Date(ISOString).getTime()/1000);
+    return Math.round(new Date(ISOString).getTime() / 1000);
 }
 
 function formatAMPM(date) {
@@ -59,7 +64,7 @@ function formatAMPM(date) {
     var minutes = date.getMinutes();
     var ampm = hours >= 12 ? 'PM' : 'AM';
     hours = hours % 12;
-    hours = hours ? hours : 12; 
+    hours = hours ? hours : 12;
     minutes = minutes < 10 ? '0' + minutes : minutes;
     var strTime = hours + ':' + minutes + ' ' + ampm;
     return strTime;
