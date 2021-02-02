@@ -23,8 +23,8 @@ const UnattendedCard = (props) => {
     let Tag = null;
     if (props.request.category.code === 'name_rsv') Tag = NRTag;
     if (props.request.category.code === 'business_reg') {
-        if (props.request.type === 'company') Tag = BNRCOMTag;
-        else if (props.request.type === 'individual') Tag = BNRITag;
+        if (props.request.type === 'partnership') Tag = BNRCOMTag;
+        else if (props.request.type === 'soleProprietorship') Tag = BNRITag;
         else Tag = BNRCOMTag;
     }
     if (props.request.category.code === 'company_reg') Tag = CRTag;

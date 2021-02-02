@@ -64,35 +64,80 @@ const BusRegRequestView = ({
 
             <div style={{ backgroundColor: '#FFF' }}>
                 <Row className='p-4'>
-                    <Col sm='6' style={{ margin: 'auto' }}>
-                        <p className='file-text-bold no-margin'>COMPANY NAME:</p>
-                        <CopyBox text={request.corporateName} />
-                    </Col>
-                    <Col sm='6' >
-                        <p className='file-text-bold no-margin'>RC NUMBER:</p>
-                        <CopyBox text={request.companyNo} />
-                    </Col>
-                </Row>
-
-                <Row className='p-4'>
-                    <Col sm='6' style={{ margin: 'auto' }}>
-                        <p className='file-text-bold no-margin'>AVAILABILITY CODE:</p>
+                    <Col sm='4' style={{ margin: 'auto' }}>
+                        <p className='file-text-bold no-margin file-text-small'>AVAILABILITY CODE:</p>
                         <CopyBox text={request.availabilityCode} />
                     </Col>
-                    <Col sm='6' >
-                        <p className='file-text-bold no-margin'>FIRST PREFERRED NAME:</p>
+                    <Col sm='4' >
+                        <p className='file-text-bold no-margin file-text-small'>FIRST PREFERRED NAME:</p>
+                        <CopyBox text={request.businessName1} />
+                    </Col>
+                    <Col sm='4' >
+                        <p className='file-text-bold no-margin file-text-small'>SECOND PREFERRED NAME:</p>
                         <CopyBox text={request.businessName1} />
                     </Col>
                 </Row>
 
                 <Row className='p-4'>
-                    <Col sm='6' >
-                        <p className='file-text-bold no-margin'>SECOND PREFERRED NAME:</p>
-                        <CopyBox text={request.businessName2} />
+                    <Col sm='6' style={{ margin: 'auto' }}>
+                        <p className='file-text-bold no-margin  file-text-small'>COMMENCEMENT DATE:</p>
+                        <CopyBox text={request.commencementDate} />
                     </Col>
                     <Col sm='6' >
-                        <p className='file-text-bold no-margin'>PHONE NUMBER:</p>
-                        <CopyBox text={request.phone} />
+                        <p className='file-text-bold no-margin  file-text-small'>EMAIL:</p>
+                        <CopyBox text={request.email} />
+                    </Col>
+                </Row>
+
+                <div className='sub-header'>
+                    PRINCIPAL PLACE OF BUSINESS
+                </div>
+
+                <Row className='p-4'>
+                    <Col sm='4' style={{ margin: 'auto' }}>
+                        <p className='file-text-bold no-margin file-text-small'>STATE:</p>
+                        <CopyBox text={request.placeOfBusiness.state} />
+                    </Col>
+                    <Col sm='4' >
+                        <p className='file-text-bold no-margin file-text-small'>LGA:</p>
+                        <CopyBox text={request.placeOfBusiness.lga} />
+                    </Col>
+                    <Col sm='4' >
+                        <p className='file-text-bold no-margin file-text-small'>CITY/TOWN/VILLAGE:</p>
+                        <CopyBox text={request.placeOfBusiness.city} />
+                    </Col>
+                </Row>
+
+                <Row className='p-4'>
+                    <Col sm='4' style={{ margin: 'auto' }}>
+                        <p className='file-text-bold no-margin file-text-small'>POSTAL CODE:</p>
+                        <CopyBox text={request.placeOfBusiness.postalCode} />
+                    </Col>
+                    <Col sm='4' >
+                        <p className='file-text-bold no-margin file-text-small'>HOUSE NUMBER/BUILDING NAME:</p>
+                        <CopyBox text={request.placeOfBusiness.houseNumber} />
+                    </Col>
+                    <Col sm='4' >
+                        <p className='file-text-bold no-margin file-text-small'>STREET NAME:</p>
+                        <CopyBox text={request.placeOfBusiness.streetName} />
+                    </Col>
+                </Row>
+
+                <Row className='p-4'>
+                    <Col sm='6' >
+                        <p className='file-text-bold no-margin  file-text-small'>FULL ADDRESS OF BRANCHES:</p>
+                        <CopyBox text={request.placeOfBusiness.branchAddress} />
+                    </Col>
+                    <Col sm='6' >
+                        <div className='image-download-container'>
+                            <p className='file-text-bold no-margin file-text-small'>DOCUMENT:</p>
+                            <a href={request.document} download className="image-download">
+                                <img src={request.document} />
+                                <div class="middle">
+                                    <div class="text">Download</div>
+                                </div>
+                            </a>
+                        </div>
                     </Col>
                 </Row>
 

@@ -48,7 +48,7 @@ const CompanyRegRequestView = ({
                         name={request.user.fullName}
 
                     />
-                </Col>
+                </Col> 
                 <Col sm='10'>
                     <p className='file-text-large file-text-bold uppercase'>{request.user.fullName}</p>
                     <p style={{ color: '#A7A7A7', fontSize: 14, margin: 0 }}>{request.user.email}</p>

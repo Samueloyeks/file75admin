@@ -81,6 +81,75 @@ const FinishedView = ({
                         <CopyBox text={request.phone} />
                     </Col>
                 </Row>
+
+                <Row className='p-4'>
+                    <Col sm='4' style={{ margin: 'auto' }}>
+                        <p className='file-text-bold no-margin'>RESERVATION TYPE:</p>
+                    </Col>
+                    <Col sm='8'>
+                        <CopyBox text={formatCamelCase(request.type)} />
+                    </Col>
+                </Row>
+
+                {request.type === 'businessName' ?
+                    <div>
+ 
+                        <Row className='p-4'>
+                            <Col sm='4' style={{ margin: 'auto' }}>
+                                <p className='file-text-bold no-margin'>SPECIFIC BUSINESS TYPE:</p>
+                            </Col>
+                            <Col sm='8'>
+                                <CopyBox text={request.specificBusinessType} />
+                            </Col>
+                        </Row>
+
+                        <Row className='p-4'>
+                            <Col sm='4' style={{ margin: 'auto' }}>
+                                <p className='file-text-bold no-margin'>NATURE OF BUSINESS:</p>
+                            </Col>
+                            <Col sm='8'> 
+                                <CopyBox text={request.natureOfBusiness} />
+                            </Col>
+                        </Row>
+
+                        <Row className='p-4'>
+                            <Col sm='4' style={{ margin: 'auto' }}>
+                                <p className='file-text-bold no-margin'>SPECIFIC NATURE OF BUSINESS:</p>
+                            </Col>
+                            <Col sm='8'>
+                                <CopyBox text={request.specificNature} />
+                            </Col>
+                        </Row>
+                    </div>
+                    : null
+                }
+
+                {request.type === 'companyName' ?
+                    <div>
+
+                        <Row className='p-4'>
+                            <Col sm='4' style={{ margin: 'auto' }}>
+                                <p className='file-text-bold no-margin'>COMPANY TYPE:</p>
+                            </Col>
+                            <Col sm='8'>
+                                <CopyBox text={request.companyReservationType} />
+                            </Col>
+                        </Row>
+
+                        {
+                            request.companyReservationType == 'limited' ?
+                                <Row className='p-4'>
+                                    <Col sm='4' style={{ margin: 'auto' }}>
+                                        <p className='file-text-bold no-margin'>LIMITED COMPANY TYPE:</p>
+                                    </Col>
+                                    <Col sm='8'>
+                                        <CopyBox text={request.companyType} />
+                                    </Col>
+                                </Row> : null
+                        }
+                    </div>
+                    : null
+                }
             </div>
         </div>
     )
