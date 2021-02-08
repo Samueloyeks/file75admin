@@ -13,14 +13,16 @@ import Info from '../../assets/svg/Info.svg';
 import DateText from '../atoms/DateText';
 import TimeText from '../atoms/TimeText';
 import CopyBox from '../atoms/CopyBox';
+import PlaceOfBusinessView from './PlaceOfBusinessView'
+import ProprietorView from './ProprietorView'
+import NatureOfBusinessView from './NatureOfBusinessView'
+import MultipleProprietorsView from './MultipleProprietorsView'
+import HideAddressView from './HideAddressView'
 
-function download(url) {
-    var link = document.createElement('a');
-    link.href = 'images.jpg';
-    link.download = url;
-    document.body.appendChild(link);
-    link.click();
-}
+
+import { formatCamelCase } from '../../helpers/encode'
+
+
 
 const BusRegRequestView = ({
     request,
@@ -53,7 +55,7 @@ const BusRegRequestView = ({
                     <p className='file-text-large file-text-bold uppercase'>{request.user.fullName}</p>
                     <p style={{ color: '#A7A7A7', fontSize: 14, margin: 0 }}>{request.user.email}</p>
                     <div style={{ display: 'flex' }}>
-                        <DateText class='file-text-small file-text-bold' dateString={request.submitted} /> <TimeText class='file-text-small file-text-bold ml-2' dateString={request.submitted} />
+                        <DateText className='file-text-small file-text-bold' dateString={request.submitted} /> <TimeText className='file-text-small file-text-bold ml-2' dateString={request.submitted} />
                     </div>
                 </Col>
             </Row>
@@ -79,62 +81,28 @@ const BusRegRequestView = ({
                 </Row>
 
                 <Row className='p-4'>
-                    <Col sm='6' style={{ margin: 'auto' }}>
+                    <Col sm='4' style={{ margin: 'auto' }}>
                         <p className='file-text-bold no-margin  file-text-small'>COMMENCEMENT DATE:</p>
                         <CopyBox text={request.commencementDate} />
                     </Col>
-                    <Col sm='6' >
+                    <Col sm='4'>
                         <p className='file-text-bold no-margin  file-text-small'>EMAIL:</p>
                         <CopyBox text={request.email} />
                     </Col>
-                </Row>
-
-                <div className='sub-header'>
-                    PRINCIPAL PLACE OF BUSINESS
-                </div>
-
-                <Row className='p-4'>
-                    <Col sm='4' style={{ margin: 'auto' }}>
-                        <p className='file-text-bold no-margin file-text-small'>STATE:</p>
-                        <CopyBox text={request.placeOfBusiness.state} />
-                    </Col>
                     <Col sm='4' >
-                        <p className='file-text-bold no-margin file-text-small'>LGA:</p>
-                        <CopyBox text={request.placeOfBusiness.lga} />
-                    </Col>
-                    <Col sm='4' >
-                        <p className='file-text-bold no-margin file-text-small'>CITY/TOWN/VILLAGE:</p>
-                        <CopyBox text={request.placeOfBusiness.city} />
+                        <p className='file-text-bold no-margin  file-text-small'>TYPE:</p>
+                        <CopyBox text={formatCamelCase(request.type)} />
                     </Col>
                 </Row>
 
                 <Row className='p-4'>
-                    <Col sm='4' style={{ margin: 'auto' }}>
-                        <p className='file-text-bold no-margin file-text-small'>POSTAL CODE:</p>
-                        <CopyBox text={request.placeOfBusiness.postalCode} />
-                    </Col>
-                    <Col sm='4' >
-                        <p className='file-text-bold no-margin file-text-small'>HOUSE NUMBER/BUILDING NAME:</p>
-                        <CopyBox text={request.placeOfBusiness.houseNumber} />
-                    </Col>
-                    <Col sm='4' >
-                        <p className='file-text-bold no-margin file-text-small'>STREET NAME:</p>
-                        <CopyBox text={request.placeOfBusiness.streetName} />
-                    </Col>
-                </Row>
-
-                <Row className='p-4'>
-                    <Col sm='6' >
-                        <p className='file-text-bold no-margin  file-text-small'>FULL ADDRESS OF BRANCHES:</p>
-                        <CopyBox text={request.placeOfBusiness.branchAddress} />
-                    </Col>
                     <Col sm='6' >
                         <div className='image-download-container'>
                             <p className='file-text-bold no-margin file-text-small'>DOCUMENT:</p>
                             <a href={request.document} download className="image-download">
                                 <img src={request.document} />
-                                <div class="middle">
-                                    <div class="text">Download</div>
+                                <div className="middle">
+                                    <div className="text">Download</div>
                                 </div>
                             </a>
                         </div>
@@ -142,30 +110,27 @@ const BusRegRequestView = ({
                 </Row>
 
 
-                <Row className='p-4'>
-                    <Col sm='6' >
-                        <p className='file-text-bold no-margin'>FULL NAME:</p>
-                        <CopyBox text={request.fullName} />
-                    </Col>
-                    <Col sm='6' >
-                        <p className='file-text-bold no-margin'>DESIGNATION:</p>
-                        <CopyBox text={request.companyDesignation} />
-                    </Col>
-                </Row>
+                <PlaceOfBusinessView placeOfBusiness={request.placeOfBusiness} />
 
-                <Row className='p-4'>
-                    <Col sm='12' >
-                        <div className='image-download-container'>
-                            <p className='file-text-bold no-margin'>SIGNATURE:</p>
-                            <a href={request.signature} download className="image-download">
-                                <img src={request.signature} />
-                                <div class="middle">
-                                    <div class="text">Download</div>
-                                </div>
-                            </a>
-                        </div>
-                    </Col>
-                </Row>
+                {
+                    request.type === 'soleProprietorship' ?
+                        <ProprietorView proprietor={request.proprietor} />
+                        : null
+                }
+
+                {
+                    request.type === 'partnership' ?
+                        <MultipleProprietorsView request={request} />
+                        : null
+                }
+
+                <NatureOfBusinessView request={request} />
+
+                {
+                    request.type === 'partnership' ?
+                        <HideAddressView request={request} />
+                        : null
+                }
 
                 <div style={{ padding: 15 }}>
                     <Button

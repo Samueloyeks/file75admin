@@ -79,3 +79,11 @@
     padding-left: 20px;
     margin: 10px;
   }
+
+  .sub-footer{
+    background-color: #FFCC00;
+    height: 30px;
+    /* padding-left: 20px; */
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }

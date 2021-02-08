@@ -229,3 +229,8 @@ code {
   border-right: 0.5px solid #4D4D4D;
 }
 
+.scrollable{
+  height: 100%;
+  overflow-y: scroll;
+}
+

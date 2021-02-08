@@ -185,14 +185,15 @@ class index extends Component {
                     toggle={this.toggleConfirmModal}
                     action={this.handleDeployRequest}
                 />
-                <Row style={{ margin: 0 }}>
-                    <Col sm='6' className='border-right no-padding'>
+
+                <Row style={{ margin: 0, height: '100vh' }}>
+                    <Col scrolling sm='6' className='border-right no-padding scrollable'>
                         <SearchBar
                             totalText="3,498 Pending"
                             value={params.search}
                             search={this.searchFilterFunction}
                         />
-                        <RequestTable 
+                        <RequestTable
                             requests={requests}
                             services={services}
                             sortedby={sortedby}
@@ -202,7 +203,7 @@ class index extends Component {
                             filterRequests={this.filterRequests}
                         />
                     </Col>
-                    <Col sm='6' className='border-left no-padding'>
+                    <Col scrolling sm='6' className='border-left no-padding scrollable' style={{ paddingBottom: 50 }}>
                         {
                             activeRequest ?
                                 <ActiveView

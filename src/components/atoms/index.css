@@ -98,12 +98,26 @@
 }
 
 .copy-box{
+    /* background-color: #F5F5F5;
+    display: flex;
+    padding: 10px;
+    margin: auto;
+    text-transform: capitalize;
+    justify-content: space-between; */
+
     background-color: #F5F5F5;
     display: flex;
     padding: 10px;
     margin: auto;
     text-transform: capitalize;
+    word-wrap: break-word;
     justify-content: space-between;
+    word-wrap: normal;
+    word-break: break-all;
+    white-space: normal;
+    height: auto;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 
 .deploy-button{
