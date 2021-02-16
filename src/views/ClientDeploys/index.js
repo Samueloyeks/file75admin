@@ -110,6 +110,7 @@ class index extends Component {
         let service = null;
         if (preparedRequest.category.code === 'name_rsv') service = 'reservation'
         else if (preparedRequest.category.code === 'business_reg') service = 'businessReg'
+        else if (preparedRequest.category.code === 'company_reg') service = 'companyReg'
         else service = 'reservation'
 
         await finishRequest(preparedRequest, service);
@@ -131,6 +132,7 @@ class index extends Component {
         let service = null;
         if (preparedRequest.category.code === 'name_rsv') service = 'reservation'
         else if (preparedRequest.category.code === 'business_reg') service = 'businessReg'
+        else if (preparedRequest.category.code === 'company_reg') service = 'companyReg'
         else service = 'reservation'
 
         await rejectRequest(preparedRequest, service);

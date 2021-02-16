@@ -145,6 +145,10 @@ class index extends Component {
             if (activeRequest && activeRequest.type && activeRequest.type === 'company') ActiveView = BusRegFinishedView
             else if (activeRequest && activeRequest.type && activeRequest.type === 'individual') ActiveView = IndividualRegFinishedView
             else ActiveView = BusRegFinishedView
+        }        else if (activeRequest && activeRequest.category.code === 'company_reg') {
+            if (activeRequest && activeRequest.type && activeRequest.type === 'limited') ActiveView = BusRegFinishedView
+            else if (activeRequest && activeRequest.type && activeRequest.type === 'unlimited') ActiveView = IndividualRegFinishedView
+            else ActiveView = BusRegFinishedView
         }
 
         return (

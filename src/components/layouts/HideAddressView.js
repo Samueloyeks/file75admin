@@ -13,7 +13,7 @@ import CopyBox from '../atoms/CopyBox';
 const HideAddressView = ({ request }) => (
     <div>
         <div className='sub-header'>
-            Hide Residential
+            Hide Residential Address
         </div>
         <Row className='p-4'>
             <Col sm='6' style={{ margin: 'auto' }}>
