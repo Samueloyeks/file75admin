@@ -37,7 +37,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.config.js --mode development --hot --inline --content-base=dist --history-api-fallback",
-    "build": "react-scripts build",
+    "webpack --mode production":"webpack ./webpack.config.js --mode production --hot --inline --content-base=dist --history-api-fallback",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
