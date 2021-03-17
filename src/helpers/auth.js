@@ -14,7 +14,8 @@ export async function getToken() {
 }
 
 export async function deleteToken() {
-
+    var userToken;
+    
     try {
         await db.delete('userToken');
     } catch (ex) {

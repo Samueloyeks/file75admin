@@ -1,4 +1,4 @@
-import React, { Component, useState, useCallback } from 'react';
+import React, {  useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone'
 
 import './index.css'

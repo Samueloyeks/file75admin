@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button, Modal,Row,Col, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React from 'react';
+import { Button, Modal,Row,Col, ModalBody } from 'reactstrap';
 
 const CustomModal = (props) => {
   const {

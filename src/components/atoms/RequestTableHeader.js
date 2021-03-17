@@ -1,5 +1,5 @@
-import React, { Component, useState } from 'react';
-import { Row, Col, Input, Button } from 'reactstrap';
+import React, { useState } from 'react';
+import { Row, Col } from 'reactstrap';
 import './index.css'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 

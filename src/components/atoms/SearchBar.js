@@ -1,5 +1,5 @@
-import React, { Component, useState } from 'react';
-import { Row, Col, Input, Button, InputGroup, InputGroupAddon, InputGroupText, } from 'reactstrap';
+import React, { useState } from 'react';
+import { Row, Col, Input, Button, InputGroup, InputGroupAddon } from 'reactstrap';
 import './index.css'
 
 

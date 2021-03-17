@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Row, Col, Input, Button } from 'reactstrap';
+import React from 'react';
+import {  Input } from 'reactstrap';
 import './index.css'
 
 

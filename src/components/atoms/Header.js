@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import './index.css';
 import UserAvatar from 'react-user-avatar';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';

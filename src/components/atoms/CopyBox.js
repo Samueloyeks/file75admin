@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import { Row, Col, Input, Button, Spinner } from 'reactstrap';
+import React from 'react';
+import 'react-toastify/dist/ReactToastify.css';
 import './index.css'
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Copy from '../../assets/svg/Copy.svg';
+
 toast.configure()
 
-// svg 
-import Copy from '../../assets/svg/Copy.svg';
 
 function showToast() {
     toast('Copied!', {

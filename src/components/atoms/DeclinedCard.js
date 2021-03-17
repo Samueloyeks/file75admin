@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
-import { Row, Col, Input, Button } from 'reactstrap';
+import React from 'react';
+import { Row, Col} from 'reactstrap';
 import './index.css'
 
 // svg 
 import Cancel from '../../assets/svg/Cancel.svg';
 import Declined from '../../assets/svg/Declined.svg';
-import Deployed from '../../assets/svg/Deployed.svg';
-import UploadGrey from '../../assets/svg/UploadGrey.svg';
 import NRTag from '../../assets/svg/NRTag.svg';
 import BNRITag from '../../assets/svg/BNRITag.svg';
 import BNRCOMTag from '../../assets/svg/BNRCOMTag.svg';
