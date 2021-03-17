@@ -19,15 +19,15 @@ process.env.NODE_ENV = 'development';
 
 module.exports = {
 
-    mode: 'development',
+    mode: "development",
 
-    entry: resolveAppPath('src'),
+    entry: resolveAppPath("src"),
 
     output: {
-        filename: 'static/js/bundle.js',
+        filename: "static/js/bundle.js",
     },
     devServer: {
-        contentBase: resolveAppPath('public'),
+        contentBase: resolveAppPath("public"),
         historyApiFallback: true,
         compress: true,
         hot: true,
