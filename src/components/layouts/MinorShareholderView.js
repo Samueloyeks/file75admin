@@ -9,78 +9,78 @@ import DateText from '../atoms/DateText';
 import TimeText from '../atoms/TimeText';
 import CopyBox from '../atoms/CopyBox';
 import ResidentialAddressView from './ResidentialAddressView';
-import AttesteeView from './AttesteeView';
+import ShareholderPSCView from './ShareholderPSCView';
+import ShareAllotmentView from './ShareAllotmentView';
 
-
-const MinorPartnerView = ({ index, minorPartner }) => (
+const MinorShareholderView = ({ index, minorShareholder }) => (
     <div>
         <div className='sub-header'>
-            {index + 1}) Minor Partner
+            {index + 1}) Minor Shareholder
         </div>
         <Row className='p-4'>
             <Col sm='4' style={{ margin: 'auto' }}>
                 <p className='file-text-bold no-margin file-text-small'>SURNAME:</p>
-                <CopyBox text={minorPartner.surname} />
+                <CopyBox text={minorShareholder.surname} />
             </Col>
             <Col sm='4' >
                 <p className='file-text-bold no-margin file-text-small'>FIRST NAME:</p>
-                <CopyBox text={minorPartner.firstName} />
+                <CopyBox text={minorShareholder.firstName} />
             </Col>
             <Col sm='4' >
                 <p className='file-text-bold no-margin file-text-small'>OTHER NAME:</p>
-                <CopyBox text={minorPartner.otherName} />
+                <CopyBox text={minorShareholder.otherName} />
             </Col>
         </Row>
 
         <Row className='p-4'>
             <Col sm='4' style={{ margin: 'auto' }}>
                 <p className='file-text-bold no-margin file-text-small'>DATE OF BIRTH:</p>
-                <CopyBox text={minorPartner.dob} />
+                <CopyBox text={minorShareholder.dob} />
             </Col>
             <Col sm='4' >
                 <p className='file-text-bold no-margin file-text-small'>GENDER:</p>
-                <CopyBox text={minorPartner.sex} />
+                <CopyBox text={minorShareholder.sex} />
             </Col>
             <Col sm='4' >
                 <p className='file-text-bold no-margin file-text-small'>NATIONALITY:</p>
-                <CopyBox text={minorPartner.nationality} />
+                <CopyBox text={minorShareholder.nationality} />
             </Col>
         </Row>
 
         <Row className='p-4'>
             <Col sm='4' style={{ margin: 'auto' }}>
                 <p className='file-text-bold no-margin file-text-small'>FORMER NAME:</p>
-                <CopyBox text={minorPartner.formerName} />
+                <CopyBox text={minorShareholder.formerName} />
             </Col>
             <Col sm='4' >
                 <p className='file-text-bold no-margin file-text-small'>FORMER NATIONALITY:</p>
-                <CopyBox text={minorPartner.formerNationality} />
+                <CopyBox text={minorShareholder.formerNationality} />
             </Col>
             <Col sm='4' >
                 <p className='file-text-bold no-margin file-text-small'>OCCUPATION:</p>
-                <CopyBox text={minorPartner.occupation} />
+                <CopyBox text={minorShareholder.occupation} />
             </Col>
         </Row>
 
         <Row className='p-4'>
             <Col sm='4' style={{ margin: 'auto' }}>
                 <p className='file-text-bold no-margin file-text-small'>PHONE NUMBER:</p>
-                <CopyBox text={minorPartner.phone} />
+                <CopyBox text={minorShareholder.phone} />
             </Col>
             <Col sm='4' >
                 <p className='file-text-bold no-margin file-text-small'>EMAIL:</p>
-                <CopyBox text={minorPartner.email} />
+                <CopyBox text={minorShareholder.email} />
             </Col>
             <Col sm='4' >
                 <p className='file-text-bold no-margin file-text-small'>MEANS OF IDENTIFICATION:</p>
-                <CopyBox text={minorPartner.documentType} />
+                <CopyBox text={minorShareholder.documentType} />
             </Col>
         </Row>
 
         <Row className='p-4'>
             <Col sm='4'>
                 <p className='file-text-bold no-margin file-text-small'>IDENTITY NUMBER:</p>
-                <CopyBox text={minorPartner.documentId} />
+                <CopyBox text={minorShareholder.documentId} />
             </Col>
         </Row>
 
@@ -88,8 +88,8 @@ const MinorPartnerView = ({ index, minorPartner }) => (
             <Col sm='6' >
                 <div className='image-download-container'>
                     <p className='file-text-bold no-margin file-text-small'>MEANS OF IDENTIFICATION:</p>
-                    <a href={minorPartner.document} download className="image-download">
-                        <img src={minorPartner.document} />
+                    <a href={minorShareholder.document} download className="image-download">
+                        <img src={minorShareholder.document} />
                         <div className="middle">
                             <div className="text">Download</div>
                         </div>
@@ -99,8 +99,8 @@ const MinorPartnerView = ({ index, minorPartner }) => (
             <Col sm='6' >
                 <div className='image-download-container'>
                     <p className='file-text-bold no-margin file-text-small'>SIGNATURE:</p>
-                    <a href={minorPartner.signature} download className="image-download">
-                        <img src={minorPartner.signature} />
+                    <a href={minorShareholder.signature} download className="image-download">
+                        <img src={minorShareholder.signature} />
                         <div className="middle">
                             <div className="text">Download</div>
                         </div>
@@ -112,8 +112,8 @@ const MinorPartnerView = ({ index, minorPartner }) => (
             <Col sm='6' >
                 <div className='image-download-container'>
                     <p className='file-text-bold no-margin file-text-small'>PASSPORT:</p>
-                    <a href={minorPartner.passport} download className="image-download">
-                        <img src={minorPartner.passport} />
+                    <a href={minorShareholder.passport} download className="image-download">
+                        <img src={minorShareholder.passport} />
                         <div className="middle">
                             <div className="text">Download</div>
                         </div>
@@ -123,17 +123,24 @@ const MinorPartnerView = ({ index, minorPartner }) => (
         </Row>
 
         <ResidentialAddressView
-            title='Partner Residential Address'
-            residentialAddress={minorPartner.residentialAddress} />
+            title='Shareholder Residential Address'
+            residentialAddress={minorShareholder.residentialAddress} />
 
         <ResidentialAddressView
-            title='Partner Service Address'
-            residentialAddress={minorPartner.serviceAddress} />
+            title='Shareholder Service Address'
+            residentialAddress={minorShareholder.serviceAddress} />
 
-        <AttesteeView attestee={minorPartner.attestee} />
+        <ShareAllotmentView share={minorShareholder.share} />
+
+        {
+            minorShareholder.PSCType ?
+                <ShareholderPSCView shareholder={minorShareholder} />
+                :
+                null
+        }
 
         <div className='sub-footer'></div>
     </div>
 )
 
-export default MinorPartnerView;
+export default MinorShareholderView;

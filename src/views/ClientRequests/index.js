@@ -48,7 +48,8 @@ function mapDispatchToProps(dispatch) {
         getServices: () => dispatch(serviceActions.getServices()),
         deployRequest: (request, service) => dispatch(requestActions.deployRequest(request, service)),
         setActiveRequest: (request, index) => dispatch(requestActions.setActiveRequest(request, index)),
-        clearActiveRequest: () => dispatch(requestActions.clearActiveRequest())
+        clearActiveRequest: () => dispatch(requestActions.clearActiveRequest()),
+        removeRequest: (id) => dispatch(requestActions.removeRequest(id))
     };
 }
 
@@ -74,6 +75,7 @@ class index extends Component {
         this.silentlyGetRequests = this.silentlyGetRequests.bind(this)
         this.handleDeployRequest = this.handleDeployRequest.bind(this)
         this.toggleConfirmModal = this.toggleConfirmModal.bind(this)
+        this.handleLoadMore = this.handleLoadMore.bind(this)
     }
 
     async silentlyGetRequests() {
@@ -82,19 +84,34 @@ class index extends Component {
         params.byAdminStatusCode = 'unattended';
 
         await getRequests(params);
+        params.getRequestsSilently = false;
     }
+
+    async handleLoadMore() {
+        const { params, getRequests } = this.props;
+        const userData = await getUser();
+
+        params.byAdminId = userData.adminId;
+        params.getRequestsSilently = true;
+        params.byAdminStatusCode = 'unattended';
+        params.page = params.page + 1;
+
+        getRequests(params);
+        params.getRequestsSilently = false;
+    };
 
     async searchFilterFunction(text) {
         const { getRequests, params } = this.props;
         params.search = text
         params.byAdminStatusCode = 'unattended';
+        params.page = 1
 
         await getRequests(params);
     };
 
     async handleDeployRequest() {
         const { preparedRequest, showModal } = this.state;
-        const { deployRequest } = this.props;
+        const { deployRequest, removeRequest } = this.props;
 
         this.setState({ showModal: !showModal });
 
@@ -105,7 +122,8 @@ class index extends Component {
         else service = 'reservation'
 
         await deployRequest(preparedRequest, service);
-        this.silentlyGetRequests()
+        removeRequest(preparedRequest._id);
+        // this.silentlyGetRequests()
     };
 
     async filterRequests(service) {
@@ -116,9 +134,11 @@ class index extends Component {
             this.setState({ sortedby: null });
         } else {
             params.byCategorycode = service.code;
+            this.setState({ sortedby: service.category });
         }
 
         params.byAdminStatusCode = 'unattended';
+        params.page = 1
         await getRequests(params);
     }
 
@@ -146,6 +166,8 @@ class index extends Component {
         const userData = await getUser();
         params.byAdminId = userData.adminId;
         params.byAdminStatusCode = 'unattended';
+        params.page = 1;
+        params.getRequestsSilently = false;
 
         clearActiveRequest()
         await getRequests(params);
@@ -177,6 +199,13 @@ class index extends Component {
             else ActiveView = BusRegRequestView
         }
 
+
+        if(Array.isArray(requests)){
+            requests.sort(function (a, b) {
+                return new Date(b.created_at) - new Date(a.created_at);
+            });
+        }
+
         return (
             <div>
                 <CustomModal
@@ -201,6 +230,7 @@ class index extends Component {
                             activateIndex={activeRequestIndex}
                             activate={this.activate}
                             filterRequests={this.filterRequests}
+                            handleLoadMore={this.handleLoadMore}
                         />
                     </Col>
                     <Col scrolling sm='6' className='border-left no-padding scrollable' style={{ paddingBottom: 50 }}>

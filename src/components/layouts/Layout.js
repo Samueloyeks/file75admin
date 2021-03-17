@@ -7,10 +7,13 @@ import Header from "../atoms/Header";
 function Layout(props) {
     return (
         <div>
-            <Header {...props}/> 
+            <Header {...props} />
             <div style={{ display: "flex" }}>
-                <Sidebar history={props.history}/>
-                <div style={{ width: '100%' }}>
+                <Sidebar history={props.history} />
+                <div style={{
+                    //  width: '100%',
+                    flex: 0.85
+                }}>
                     {/* <Nav /> */}
                     {props.children}
                 </div>

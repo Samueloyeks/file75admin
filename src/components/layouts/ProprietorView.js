@@ -125,6 +125,10 @@ const ProprietorView = ({ proprietor }) => (
             title='PROPRIETOR RESIDENTIAL ADDRESS'
             residentialAddress={proprietor.residentialAddress} />
 
+        <ResidentialAddressView
+            title='PROPRIETOR SERVICE ADDRESS'
+            residentialAddress={proprietor.serviceAddress} />
+
     </div>
 )
 

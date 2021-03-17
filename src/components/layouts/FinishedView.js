@@ -14,6 +14,7 @@ import DateText from '../atoms/DateText';
 import TimeText from '../atoms/TimeText';
 import CopyBox from '../atoms/CopyBox';
 
+import { formatCamelCase } from '../../helpers/encode'
 
 
 const FinishedView = ({

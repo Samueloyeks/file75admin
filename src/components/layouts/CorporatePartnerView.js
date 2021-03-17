@@ -101,6 +101,10 @@ const CorporatePartnerView = ({ index, corporatePartner }) => (
             title='Partner Residential Address'
             residentialAddress={corporatePartner.residentialAddress} />
 
+        <ResidentialAddressView
+            title='Partner Service Address'
+            residentialAddress={corporatePartner.serviceAddress} />
+
         <div className='sub-footer'></div>
     </div>
 )

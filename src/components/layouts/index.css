@@ -27,11 +27,17 @@
 }
 
 .hyyUkH{
-    position: fixed !important;
+    /* position: fixed !important; */
+}
+
+.hyyUkH > div {
+  width: 15% !important;
+  /* position: fixed !important; */
 }
 
 .Sidebar-list-1{
-    width: 370px !important;
+    /* width: 370px !important; */
+    flex:0.15 !important;
 }
 
 .image-download-container {

@@ -64,6 +64,7 @@ const BusRegRequestView = ({
                 {request.category.category} <Info className='info-icon' />
             </Row>
 
+            {/* info  */}
             <div style={{ backgroundColor: '#FFF' }}>
                 <Row className='p-4'>
                     <Col sm='4' style={{ margin: 'auto' }}>

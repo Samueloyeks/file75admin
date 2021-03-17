@@ -1,14 +1,11 @@
 import { Component } from "react";
 import axios from 'axios';
-// import {
-//     ADMIN_API_DEV_URL
-// } from 'react-native-dotenv';
 import db from '../../utils/db';
 
 
 var authHeader = '';
 
-const baseURL = process.env.ADMIN_API_DEV_URL
+const baseURL = process.env.ADMIN_API_URL
 // const defaultHeader = {
 //     // 'Authorization': authHeader,
 //     "Content-Type": "application/x-www-form-urlencoded",

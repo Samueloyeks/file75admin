@@ -11,10 +11,10 @@ import CopyBox from '../atoms/CopyBox';
 import ResidentialAddressView from './ResidentialAddressView';
 
 
-const IndividualPartnerView = ({index, individualPartner }) => (
+const IndividualPartnerView = ({ index, individualPartner }) => (
     <div>
         <div className='sub-header'>
-           {index+1}) Individual Partner
+            {index + 1}) Individual Partner
         </div>
         <Row className='p-4'>
             <Col sm='4' style={{ margin: 'auto' }}>
@@ -120,10 +120,14 @@ const IndividualPartnerView = ({index, individualPartner }) => (
                 </div>
             </Col>
         </Row>
-        
+
         <ResidentialAddressView
-         title ='Partner Residential Address'
-         residentialAddress={individualPartner.residentialAddress}/>
+            title='Partner Residential Address'
+            residentialAddress={individualPartner.residentialAddress} />
+
+        <ResidentialAddressView
+            title='Partner Service Address'
+            residentialAddress={individualPartner.serviceAddress} />
 
         <div className='sub-footer'></div>
     </div>

@@ -32,7 +32,7 @@ function mapStateToProps(state) {
         requests,
         services,
         params,
-        finishing, 
+        finishing,
         rejecting,
         activeRequestIndex,
         activeRequest
@@ -47,7 +47,8 @@ function mapDispatchToProps(dispatch) {
         finishRequest: (request, service) => dispatch(requestActions.finishRequest(request, service)),
         rejectRequest: (request, service) => dispatch(requestActions.rejectRequest(request, service)),
         setActiveRequest: (request, index) => dispatch(requestActions.setActiveRequest(request, index)),
-        clearActiveRequest: () => dispatch(requestActions.clearActiveRequest())
+        clearActiveRequest: () => dispatch(requestActions.clearActiveRequest()),
+        removeRequest: (id) => dispatch(requestActions.removeRequest(id))
     };
 }
 
@@ -77,6 +78,7 @@ class index extends Component {
         this.handleRejectRequest = this.handleRejectRequest.bind(this)
         this.toggleConfirmModal = this.toggleConfirmModal.bind(this)
         this.toggleRejectModal = this.toggleRejectModal.bind(this)
+        this.handleLoadMore = this.handleLoadMore.bind(this)
     }
 
     async silentlyGetRequests() {
@@ -85,12 +87,27 @@ class index extends Component {
         params.byAdminStatusCode = 'deployed';
 
         await getRequests(params);
+        params.getRequestsSilently = false;
     }
+
+    async handleLoadMore() {
+        const { params, getRequests } = this.props;
+        const userData = await getUser();
+
+        params.byAdminId = userData.adminId;
+        params.getRequestsSilently = true;
+        params.byAdminStatusCode = 'deployed';
+        params.page = params.page + 1;
+
+        getRequests(params);
+        params.getRequestsSilently = false;
+    };
 
     async searchFilterFunction(text) {
         const { getRequests, params } = this.props;
         params.search = text
         params.byAdminStatusCode = 'deployed';
+        params.page = 1
 
         await getRequests(params);
     };
@@ -119,7 +136,7 @@ class index extends Component {
 
     async handleRejectRequest() {
         const { preparedRequest, showRejectModal } = this.state;
-        const { rejectRequest } = this.props;
+        const { rejectRequest, removeRequest } = this.props;
 
         if (!preparedRequest.responseFiles || preparedRequest.responseFiles.length == 0) {
             this.setState({ showRejectModal: !showRejectModal });
@@ -136,7 +153,8 @@ class index extends Component {
         else service = 'reservation'
 
         await rejectRequest(preparedRequest, service);
-        this.silentlyGetRequests()
+        removeRequest(preparedRequest._id);
+        // this.silentlyGetRequests()
     };
 
     async filterRequests(service) {
@@ -151,6 +169,7 @@ class index extends Component {
         }
 
         params.byAdminStatusCode = 'deployed';
+        params.page = 1
         await getRequests(params);
     }
 
@@ -188,6 +207,8 @@ class index extends Component {
         const userData = await getUser();
         params.byAdminId = userData.adminId;
         params.byAdminStatusCode = 'deployed';
+        params.page = 1;
+        params.getRequestsSilently = false;
 
         clearActiveRequest()
         await getRequests(params);
@@ -205,6 +226,12 @@ class index extends Component {
     render() {
         const { loading, requests, services, params, finishing, rejecting, activeRequest, activeRequestIndex } = this.props;
         const { sortedby, showModal, showRejectModal } = this.state;
+
+        if(Array.isArray(requests)){
+            requests.sort(function (a, b) {
+                return new Date(b.created_at) - new Date(a.created_at);
+            });
+        }
 
         return (
             <div>
@@ -235,6 +262,7 @@ class index extends Component {
                             activateIndex={activeRequestIndex}
                             activate={this.activate}
                             filterRequests={this.filterRequests}
+                            handleLoadMore={this.handleLoadMore}
                         />
                     </Col>
                     <Col sm='6' className='border-left no-padding'>

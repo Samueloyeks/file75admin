@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 
-const baseURL = process.env.API_LOCAL_URL
+const baseURL = process.env.API_URL
 
 
 export const userService = {

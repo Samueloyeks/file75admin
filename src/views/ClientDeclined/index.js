@@ -69,6 +69,7 @@ class index extends Component {
         this.activate = this.activate.bind(this)
         this.close = this.close.bind(this)
         this.silentlyGetRequests = this.silentlyGetRequests.bind(this)
+        this.handleLoadMore = this.handleLoadMore.bind(this)
     }
 
     async silentlyGetRequests() {
@@ -77,12 +78,27 @@ class index extends Component {
         params.byAdminStatusCode = 'finished';
 
         await getRequests(params);
+        params.getRequestsSilently = false;
     }
+
+    async handleLoadMore() {
+        const { params, getRequests } = this.props;
+        const userData = await getUser();
+
+        params.byAdminId = userData.adminId;
+        params.getRequestsSilently = true;
+        params.byAdminStatusCode = 'finished';
+        params.page = params.page + 1;
+
+        getRequests(params);
+        params.getRequestsSilently = false;
+    };
 
     async searchFilterFunction(text) {
         const { getRequests, params } = this.props;
         params.search = text
         params.byAdminStatusCode = 'finished';
+        params.page = 1
 
         await getRequests(params);
     };
@@ -101,6 +117,7 @@ class index extends Component {
         }
 
         params.byAdminStatusCode = 'finished';
+        params.page = 1
         await getRequests(params);
     }
 
@@ -121,6 +138,8 @@ class index extends Component {
         const userData = await getUser();
         params.byAdminId = userData.adminId;
         params.byAdminStatusCode = 'rejected';
+        params.page = 1;
+        params.getRequestsSilently = false;
 
         clearActiveRequest()
         await getRequests(params);
@@ -150,6 +169,12 @@ class index extends Component {
             else if (activeRequest && activeRequest.type && activeRequest.type === 'unlimited') ActiveView = IndividualRegFinishedView
         }
 
+        if(Array.isArray(requests)){
+            requests.sort(function (a, b) {
+                return new Date(b.created_at) - new Date(a.created_at);
+            });
+        }
+        
         return (
             <div>
                 <Row style={{ margin: 0 }}>
@@ -167,6 +192,7 @@ class index extends Component {
                             activateIndex={activeRequestIndex}
                             activate={this.activate}
                             filterRequests={this.filterRequests}
+                            handleLoadMore={this.handleLoadMore}
                         />
                     </Col>
                     <Col sm='6' className='border-left no-padding'>

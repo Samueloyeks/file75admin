@@ -3,14 +3,10 @@ import db from '../utils/db';
 import { getToken } from '../helpers/auth';
 import { encodeAssociations } from '../helpers/encode';
 import axios from 'axios';
-// import {
-//     API_DEV_URL,
-//     API_LOCAL_URL
-// } from 'react-native-dotenv';
 
 
-const baseURL = process.env.API_LOCAL_URL
-// const baseURL = API_LOCAL_URL;
+
+const baseURL = process.env.API_URL
 
 
 export const requestService = {

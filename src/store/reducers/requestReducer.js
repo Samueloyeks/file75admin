@@ -19,16 +19,18 @@ const REJECT_REQUEST_SUCCESS = requestConstants.REJECT_REQUEST_SUCCESS
 
 const SET_ACTIVE_REQUEST = requestConstants.SET_ACTIVE_REQUEST
 const CLEAR_ACTIVE_REQUEST = requestConstants.CLEAR_ACTIVE_REQUEST
+const REMOVE_REQUEST = requestConstants.REMOVE_REQUEST
 
 
 export function requestReducer(state = {
     loading: false,
+    loadingMore: false,
     refresh: false,
     getRequestsSilently: false,
     params: {
         associations: ["status", "category", "user", "adminStatus"],
         page: 1,
-        perPage: 30,
+        perPage: 5,
         search: null,
         byUserId: null,
         byStatusCode: null,
@@ -48,7 +50,8 @@ export function requestReducer(state = {
             return {
                 ...state,
                 loading: true,
-                params: state.params
+                params: state.params,
+                requests: state.params.page === 1 ? [] : state.requests
             }
         case GET_REQUESTS_SILENTLY_REQUEST:
             return {
@@ -68,7 +71,7 @@ export function requestReducer(state = {
                 ...state,
                 loading: false,
                 params: state.params,
-                requests: action.data
+                requests: state.params.page === 1 ? action.data : [...state.requests, ...action.data]
             }
         case DEPLOY_REQUEST_REQUEST:
             return {
@@ -126,6 +129,11 @@ export function requestReducer(state = {
                 ...state,
                 activeRequest: null,
                 activeRequestIndex: null
+            }
+        case REMOVE_REQUEST:
+            return {
+                ...state,
+                requests: state.requests.filter(request => request._id !== action.id)
             }
         default:
             return state

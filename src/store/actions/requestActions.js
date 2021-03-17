@@ -8,7 +8,8 @@ export const requestActions = {
     setActiveRequest,
     clearActiveRequest,
     finishRequest,
-    rejectRequest
+    rejectRequest,
+    removeRequest
 };
 
 
@@ -24,9 +25,6 @@ function getRequests(params) {
         requestService.getRequests(params)
             .then(resp => {
                 if (resp) {
-                    resp.sort(function (a, b) {
-                        return new Date(b.created_at) - new Date(a.created_at);
-                    });
                     dispatch(success(resp));
                 } else {
                     dispatch(failure('error'));
@@ -140,6 +138,14 @@ function clearActiveRequest() {
     }
 
     function clearRequest(request, index) { return { type: requestConstants.CLEAR_ACTIVE_REQUEST } }
+}
+
+function removeRequest(id) {
+    return dispatch => {
+        dispatch(remove(id));
+    }
+
+    function remove(id) { return { type: requestConstants.REMOVE_REQUEST, id} }
 }
 
 
