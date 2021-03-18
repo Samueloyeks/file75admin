@@ -12,7 +12,7 @@ function Layout(props) {
                 <Sidebar history={props.history} />
                 <div style={{
                     //  width: '100%',
-                    flex: 0.85
+                    flex: 1
                 }}>
                     {/* <Nav /> */}
                     {props.children}
